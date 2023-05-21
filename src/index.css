@@ -32,7 +32,7 @@ img {
 
 a {
   text-decoration: none;
-  display: block;
+  display: inline-block;
 }
 
 button {

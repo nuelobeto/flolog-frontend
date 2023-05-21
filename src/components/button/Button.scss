@@ -58,3 +58,61 @@ button {
     border-radius: 50%;
   }
 }
+
+.google-btn {
+  line-height: 1.75;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  padding: 7px 21px;
+  background-color: #2d3748;
+  border: 1px solid #2d3748;
+  color: #fff;
+  border-radius: 4px;
+  gap: 1rem;
+
+  img {
+    width: 30px;
+  }
+}
+
+.app-store-btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 2px solid #fff;
+    width: 250px;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    background-color: #000;
+
+    img {
+      width: 50px;
+    }
+
+    svg {
+      font-size: 50px;
+    }
+
+    p {
+      font-size: var(--text-md);
+      line-height: 1;
+      text-align: left;
+
+      span {
+        font-size: var(--text-2xl);
+        font-weight: 500;
+      }
+    }
+  }
+}

@@ -1,7 +1,9 @@
-import { CheckIcon, ForwardArrowIcon, WhatsAppIcon } from "../../assets/icons";
-import Button from "../../components/button/Button";
+import { Link } from "react-router-dom";
+import { CheckIcon, ForwardArrowIcon } from "../../assets/icons";
+import { Button } from "../../components/button/Button";
 import Footer from "../../components/footer/Footer";
 import "./Landing.scss";
+import { ROUTES } from "./../../config/routes";
 
 const Landing = () => {
   return (
@@ -9,16 +11,15 @@ const Landing = () => {
       <header>
         <section className="hero-section">
           <h1>Connect with Expert Pharmacists Anytime, Anywhere with Flolog</h1>
-          <button>Get Started</button>
+          <Link to={ROUTES.auth}>
+            <button>Get Started</button>
+          </Link>
         </section>
       </header>
 
       <main>
         <section className="section-i">
-          <img
-            src="https://res.cloudinary.com/dk9bt9lkn/image/upload/v1683866269/flo-log/Group_12625_pqixke.png"
-            alt=""
-          />
+          <img src="/images/section1.webp" alt="" />
           <div>
             <h2>Maximize Your Medication Safety and Convenience with Flolog</h2>
             <p>
@@ -37,10 +38,7 @@ const Landing = () => {
         </section>
 
         <section className="section-ii">
-          <img
-            src="https://res.cloudinary.com/dk9bt9lkn/image/upload/v1683866439/flo-log/Rectangle_46_msxtbm.png"
-            alt=""
-          />
+          <img src="images/section2.webp" alt="" />
 
           <div>
             <div>
