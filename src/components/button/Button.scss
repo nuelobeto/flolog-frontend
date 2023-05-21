@@ -1,0 +1,60 @@
+button {
+  line-height: 1.75;
+  font-weight: 600;
+  cursor: pointer;
+
+  &.sm {
+    padding: 3px 9px;
+    font-size: 0.8125rem;
+  }
+
+  &.md {
+    padding: 5px 15px;
+    font-size: 0.875rem;
+  }
+
+  &.lg {
+    font-size: 0.9375rem;
+    padding: 7px 21px;
+  }
+
+  &.outlined-primary {
+    background-color: #fff;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+  }
+
+  &.outlined-white {
+    background-color: #fff;
+    border: 1px solid #fff;
+    color: var(--primary);
+  }
+
+  &.filled-primary {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    color: #fff;
+  }
+
+  &.filled-white {
+    background-color: #fff;
+    border: 1px solid #fff;
+    color: var(--primary);
+  }
+
+  &.rounded-sm {
+    border-radius: 4px;
+  }
+
+  &.rounded-md {
+    border-radius: 8px;
+  }
+
+  &.rounded-lg {
+    border-radius: 12px;
+  }
+
+  &.rounded-full {
+    border-radius: 50%;
+  }
+}

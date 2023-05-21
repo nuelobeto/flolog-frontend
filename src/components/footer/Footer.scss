@@ -1,0 +1,72 @@
+footer {
+  background-color: var(--primary);
+  padding: 4rem 1.5rem;
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    & > div {
+      color: #fff;
+      text-align: center;
+
+      h2 {
+        font-size: var(--text-xl);
+        margin-bottom: 0.75rem;
+        font-weight: 700;
+      }
+
+      .line {
+        height: 2px;
+        width: 150px;
+        background-color: #fff;
+        margin: 0 auto 0.5rem;
+      }
+
+      .urls {
+        display: flex;
+        flex-direction: column;
+
+        a {
+          color: #fff;
+          padding: 0.5rem 0;
+        }
+      }
+    }
+  }
+
+  .app-store {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 2.5rem 0 2rem;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      border-radius: 12px;
+      border: 2px solid #fff;
+      width: 250px;
+      justify-content: center;
+      margin: auto;
+      cursor: pointer;
+      color: #fff;
+
+      svg {
+        font-size: 50px;
+      }
+
+      p {
+        font-size: var(--text-base);
+
+        span {
+          font-size: var(--text-2xl);
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
