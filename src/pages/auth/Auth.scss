@@ -1,0 +1,49 @@
+.auth-main {
+  padding: 3rem 1rem 4rem;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+
+  h1 {
+    color: #7a7777;
+    margin-bottom: 1rem;
+    span {
+      color: #2e83b5;
+    }
+  }
+
+  .subtitle {
+    color: #7a7777;
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+}
+
+.or-divider {
+  width: 235px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #7a7777;
+
+  & > div {
+    flex: 1;
+    height: 2px;
+    background-color: #cfcfcf;
+  }
+}
+
+.alt-action {
+  color: #2d3748;
+  a {
+    color: #2e83b5;
+  }
+}
+
+.get-the-app {
+  margin-top: 3rem;
+}

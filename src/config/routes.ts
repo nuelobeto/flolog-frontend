@@ -4,4 +4,6 @@ export const ROUTES = {
   blog: "/blog",
   about_us: "/about-us",
   auth: "/auth",
+  login: "/auth/login",
+  signup: "/auth/signup",
 };

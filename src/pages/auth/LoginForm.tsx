@@ -1,4 +1,4 @@
-import React from "react";
+import "./Auth.scss";
 
 const LoginForm = () => {
   return <div>LoginForm</div>;

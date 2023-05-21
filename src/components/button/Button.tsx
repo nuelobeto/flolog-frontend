@@ -1,3 +1,4 @@
+import { AppleIcon } from "../../assets/icons";
 import "./Button.scss";
 
 type ButtonProps = {
@@ -9,7 +10,7 @@ type ButtonProps = {
   style?: any;
 };
 
-const Button = ({
+export const Button = ({
   children,
   size,
   color,
@@ -45,4 +46,37 @@ const Button = ({
   );
 };
 
-export default Button;
+type GoogleBtnProps = {
+  text: string;
+};
+
+export const GoogleButton = ({ text }: GoogleBtnProps) => {
+  return (
+    <button className="google-btn">
+      <img src="/images/google.webp" alt="" />
+      <span>{text}</span>
+    </button>
+  );
+};
+
+export const AppStoreButtons = () => {
+  return (
+    <div className="app-store-btns">
+      <button>
+        <img src="/images/google-play.webp" alt="" />
+        <p>
+          GET IT ON <br />
+          <span>Google Play</span>
+        </p>
+      </button>
+
+      <button>
+        <AppleIcon />
+        <p>
+          Download on the <br />
+          <span>App Store</span>
+        </p>
+      </button>
+    </div>
+  );
+};
