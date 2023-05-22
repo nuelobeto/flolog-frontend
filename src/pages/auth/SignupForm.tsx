@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CloseIcon } from "../../assets/icons";
 import {
   AppStoreButtons,
   Button,

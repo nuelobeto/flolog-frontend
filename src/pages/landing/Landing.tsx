@@ -25,15 +25,17 @@ const Landing = () => {
             <p>
               Your Personalized <br /> Pharmacy on the Go
             </p>
-            <Button
-              size={"lg"}
-              color={"white"}
-              variant={"filled"}
-              rounded={"lg"}
-              style={{ marginTop: "0.5rem", width: "fit-content" }}
-            >
-              Sign Up
-            </Button>
+            <Link to={ROUTES.signup}>
+              <Button
+                size={"lg"}
+                color={"white"}
+                variant={"filled"}
+                rounded={"lg"}
+                style={{ marginTop: "0.5rem", width: "fit-content" }}
+              >
+                Sign Up
+              </Button>
+            </Link>
           </div>
         </section>
 

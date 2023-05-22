@@ -21,6 +21,7 @@ const LoginForm = () => {
     event.preventDefault();
     console.log(formData);
   };
+
   return (
     <>
       <header>
@@ -65,7 +66,7 @@ const LoginForm = () => {
             <GoogleButton text={"Sign-in with google"} />
 
             <p className="alt-action">
-              Already have an account? <Link to={ROUTES.login}>Sign up</Link>
+              Already have an account? <Link to={ROUTES.signup}>Sign up</Link>
             </p>
           </form>
 
