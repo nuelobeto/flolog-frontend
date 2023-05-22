@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <nav className="app-nav">
       <Link to="/">
-        <img src="images/logo.webp" alt="flolog logo" />
+        <img src="/images/logo.webp" alt="flolog logo" />
       </Link>
 
       <div className="menu-btn" onClick={() => setShowMenu(!showMenu)}>
