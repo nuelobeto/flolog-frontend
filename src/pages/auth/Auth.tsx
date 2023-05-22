@@ -15,7 +15,7 @@ const Auth = () => {
       <header>
         <Navbar />
       </header>
-      <main className="auth-main">
+      <main className="auth">
         <div>
           <h1>
             <span>Transform</span> Your Medication Management with{" "}
@@ -26,15 +26,17 @@ const Auth = () => {
           </p>
         </div>
 
-        <Button
-          size={"lg"}
-          color={"primary"}
-          variant={"filled"}
-          rounded={"sm"}
-          style={{ width: "235px", height: "46px" }}
-        >
-          Sign Up with Form
-        </Button>
+        <Link to={ROUTES.signup}>
+          <Button
+            size={"lg"}
+            color={"primary"}
+            variant={"filled"}
+            rounded={"sm"}
+            style={{ width: "235px", height: "46px" }}
+          >
+            Sign Up with Form
+          </Button>
+        </Link>
 
         <div className="or-divider">
           <div></div>
