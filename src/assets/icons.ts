@@ -1,4 +1,11 @@
-import { MdClose, MdMenu } from "react-icons/md";
+import {
+  MdArrowDropDown,
+  MdClose,
+  MdMenu,
+  MdNotifications,
+  MdOutlineEdit,
+  MdVerified,
+} from "react-icons/md";
 import {
   BsApple,
   BsArrowRight,
@@ -14,3 +21,7 @@ export const ForwardArrowIcon = BsArrowRight;
 export const WhatsAppIcon = BsWhatsapp;
 export const PlaystoreIcon = IoLogoGooglePlaystore;
 export const AppleIcon = BsApple;
+export const NotifiationIcon = MdNotifications;
+export const EditIcon = MdOutlineEdit;
+export const VerifiedIcon = MdVerified;
+export const DropdownIcon = MdArrowDropDown;

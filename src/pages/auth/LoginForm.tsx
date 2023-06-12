@@ -7,7 +7,6 @@ import {
 } from "../../components/button/Button";
 import Footer from "../../components/footer/Footer";
 import { FormInput } from "../../components/input/Input";
-import Navbar from "../../components/navbar/Navbar";
 import { ROUTES } from "../../config/routes";
 import "./Auth.scss";
 
@@ -24,9 +23,6 @@ const LoginForm = () => {
 
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
       <main className="auth">
         <div className="auth-form">
           <h2>Log In</h2>

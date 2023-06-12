@@ -4,15 +4,18 @@ import Landing from "./pages/landing/Landing";
 import Auth from "./pages/auth/Auth";
 import SignupForm from "./pages/auth/SignupForm";
 import LoginForm from "./pages/auth/LoginForm";
+import { ROUTES } from "./config/routes";
+import UserDashboard from "./pages/user-dashboard/UserDashboard";
 
 const AppRoutes = () => {
   return (
     <PhoneContainer>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="auth" element={<Auth />} />
-        <Route path="auth/signup" element={<SignupForm />} />
-        <Route path="auth/login" element={<LoginForm />} />
+        <Route path={ROUTES.landing} element={<Landing />} />
+        <Route path={ROUTES.auth} element={<Auth />} />
+        <Route path={ROUTES.signup} element={<SignupForm />} />
+        <Route path={ROUTES.login} element={<LoginForm />} />
+        <Route path={ROUTES.user_dashboard} element={<UserDashboard />} />
       </Routes>
     </PhoneContainer>
   );
