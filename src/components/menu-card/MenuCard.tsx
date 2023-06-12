@@ -22,7 +22,7 @@ const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
 export default MenuCard;
 
 const links = [
-  { name: "Home", url: ROUTES.home },
+  { name: "Home", url: ROUTES.landing },
   { name: "Dashboard", url: ROUTES.dashboard },
   { name: "Blog", url: ROUTES.blog },
   { name: "About Us", url: ROUTES.about_us },
