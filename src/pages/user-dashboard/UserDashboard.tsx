@@ -1,11 +1,5 @@
 import "./UserDashboard.scss";
-import Footer from "./../../components/footer/Footer";
-import {
-  CheckIcon,
-  EditIcon,
-  NotifiationIcon,
-  VerifiedIcon,
-} from "../../assets/icons";
+import { EditIcon, NotifiationIcon, VerifiedIcon } from "../../assets/icons";
 import Select from "react-select";
 import { DropdownIcon } from "./../../assets/icons";
 
