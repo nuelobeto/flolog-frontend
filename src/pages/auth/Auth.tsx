@@ -1,5 +1,4 @@
 import "./Auth.scss";
-import Navbar from "./../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import {
   Button,
@@ -12,9 +11,6 @@ import { ROUTES } from "../../config/routes";
 const Auth = () => {
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
       <main className="auth">
         <div>
           <h1>
