@@ -175,7 +175,10 @@
     gap: 1rem;
     height: 52px;
     padding: 0 10px;
-    border-bottom: 1px solid #bcb8b8;
+
+    &.border {
+      border-bottom: 1px solid #bcb8b8;
+    }
   }
 
   .input-body {
