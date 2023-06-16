@@ -249,7 +249,7 @@ const EditableField = ({
 }) => {
   return (
     <div className="editable-field">
-      <div className="input-header">
+      <div className={`input-header ${openEditableField === id && "border"}`}>
         <label>{label}</label>
         {openEditableField === id ? (
           <CheckIcon className="save-icon" onClick={handleOpen} />
