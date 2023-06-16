@@ -9,23 +9,50 @@ import Footer from "../../components/footer/Footer";
 import { FormInput } from "../../components/input/Input";
 import { ROUTES } from "../../config/routes";
 import "./Auth.scss";
+import authServices from "./../../services/authServices";
+import { RegisterT } from "../../types/type";
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
-    mobile: "",
     email: "",
+    first_name: "",
+    last_name: "",
+    phone_number: "",
+    country: "",
     state: "",
     city: "",
     password: "",
     confirm_password: "",
   });
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleCreateAccount = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateAccount = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
-    console.log(formData);
+
+    const payload: RegisterT = {
+      email: formData.email,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      phone_number: Number(formData.phone_number),
+      country: formData.country,
+      state: formData.state,
+      city: formData.city,
+      password: formData.password,
+    };
+
+    setLoading(true);
+
+    try {
+      const result = await authServices.register_client(payload);
+      setLoading(false);
+      console.log(result);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   };
 
   return (
@@ -37,22 +64,22 @@ const SignupForm = () => {
           <form onSubmit={handleCreateAccount}>
             <FormInput
               type={"text"}
-              name={"firstname"}
-              value={formData.firstname}
+              name={"first_name"}
+              value={formData.first_name}
               setValue={setFormData}
               label={"First Name"}
             />
             <FormInput
               type={"text"}
-              name={"lastname"}
-              value={formData.lastname}
+              name={"last_name"}
+              value={formData.last_name}
               setValue={setFormData}
               label={"Last Name"}
             />
             <FormInput
               type={"tel"}
-              name={"mobile"}
-              value={formData.mobile}
+              name={"phone_number"}
+              value={formData.phone_number}
               setValue={setFormData}
               label={"Mobile Number"}
             />
@@ -62,6 +89,13 @@ const SignupForm = () => {
               value={formData.email}
               setValue={setFormData}
               label={"Email Address"}
+            />
+            <FormInput
+              type={"text"}
+              name={"country"}
+              value={formData.country}
+              setValue={setFormData}
+              label={"Country"}
             />
             <FormInput
               type={"text"}
@@ -106,7 +140,7 @@ const SignupForm = () => {
               rounded={"sm"}
               style={{ width: "235px", height: "46px", margin: "1rem 0 0" }}
             >
-              Create account
+              {!loading ? "Create account" : "Loading.."}
             </Button>
 
             <div className="or-divider">
