@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../config/routes";
 import "./MenuCard.scss";
 
@@ -8,6 +9,12 @@ type MenuProps = {
 };
 
 const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setShowMenu(false);
+  }, [pathname]);
+
   return (
     <div className={`menu-card ${showMenu ? "show" : "close"}`}>
       {links.map((link, index) => (
@@ -22,8 +29,8 @@ const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
 export default MenuCard;
 
 const links = [
-  { name: "Home", url: ROUTES.landing },
-  { name: "Dashboard", url: ROUTES.dashboard },
+  { name: "Home", url: ROUTES.home },
+  { name: "Dashboard", url: ROUTES.user_dashboard },
   { name: "Blog", url: ROUTES.blog },
   { name: "About Us", url: ROUTES.about_us },
   { name: "Log In", url: ROUTES.auth },
