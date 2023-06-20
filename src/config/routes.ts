@@ -8,4 +8,5 @@ export const ROUTES = {
   signup: "/auth/signup",
   user_dashboard: "/user-dashboard",
   home: "/home",
+  chat: "/chat",
 };

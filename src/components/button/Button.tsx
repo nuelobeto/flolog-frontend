@@ -8,6 +8,7 @@ type ButtonProps = {
   variant: "outlined" | "filled";
   rounded?: "sm" | "md" | "lg" | "full";
   style?: any;
+  onClick?: () => void;
 };
 
 export const Button = ({
@@ -17,6 +18,7 @@ export const Button = ({
   variant,
   rounded,
   style,
+  onClick,
 }: ButtonProps) => {
   const btnSize =
     size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" && "lg";
@@ -40,7 +42,11 @@ export const Button = ({
       : rounded === "full" && "rounded-full";
 
   return (
-    <button style={style} className={`${btnSize} ${btnVariant} ${btnRounded}`}>
+    <button
+      style={style}
+      className={`${btnSize} ${btnVariant} ${btnRounded}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

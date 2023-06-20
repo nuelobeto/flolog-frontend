@@ -50,3 +50,17 @@ button {
 .hide-scroll-bar::-webkit-scrollbar {
   display: none;
 }
+
+.modal {
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+
+  .close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 30px;
+    cursor: pointer;
+  }
+}
