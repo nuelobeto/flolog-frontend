@@ -1,0 +1,108 @@
+.token-popup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #00000093;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  padding-top: 6rem;
+
+  .token-modal {
+    height: fit-content;
+    padding-top: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(
+      178.91deg,
+      rgb(46, 181, 173),
+      rgb(9, 161, 255),
+      rgb(4, 109, 174)
+    );
+
+    .close-modal {
+      color: #fff;
+    }
+
+    .token-image {
+      margin: auto;
+      width: 150px;
+      margin-bottom: 1rem;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    h2 {
+      text-align: center;
+      font-size: var(--text-lg);
+      margin-bottom: 0.75rem;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 14px;
+      max-width: 300px;
+      width: 100%;
+      margin: 0 auto 1.5rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      max-width: 300px;
+      width: 100%;
+      margin: 1.5rem auto 2rem;
+
+      span {
+        color: #ffe000;
+        font-weight: 600;
+      }
+    }
+
+    .token-packages {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+
+      .package {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10px 10px;
+        border-right: 1px solid #fff;
+        &:last-child {
+          border-right: none;
+        }
+
+        .package-title {
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 3px;
+        }
+
+        .package-feature {
+          font-size: 11px;
+          text-align: center;
+        }
+
+        .package-price {
+          font-size: 14px;
+          color: #ffe000;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+
+    button {
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.home {
+  padding: 3rem 1.5rem 0;
+
+  h1 {
+    text-align: center;
+    font-size: var(--text-lg);
+    margin-bottom: 3rem;
+  }
+}
+
+.request-service {
+  max-width: 320px;
+  width: 100%;
+  border-radius: 16px;
+  background-color: #2e83b5;
+  margin: auto;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  cursor: pointer;
+
+  .image {
+    width: 90px;
+    aspect-ratio: 1/1;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  p {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: #fff;
+  }
+}
