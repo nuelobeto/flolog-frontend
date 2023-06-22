@@ -9,4 +9,5 @@ export const ROUTES = {
   user_dashboard: "/user-dashboard",
   home: "/home",
   chat: "/chat",
+  request_medication: "/request-medication",
 };

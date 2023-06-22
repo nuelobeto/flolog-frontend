@@ -1,10 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { CloseIcon } from "../../assets/icons";
 import { Button } from "../../components/button/Button";
 import Footer from "../../components/footer/Footer";
+import { ROUTES } from "../../config/routes";
 import "./Chat.scss";
 
 const Chat = () => {
   const messages: any[] = [];
+  const navigate = useNavigate();
+
   return (
     <>
       <main className="chat main">
@@ -13,7 +17,7 @@ const Chat = () => {
             <div className="indicator"></div>
             <span>Online</span>
           </div>
-          <CloseIcon />
+          <CloseIcon onClick={() => navigate(ROUTES.home)} />
         </div>
 
         <div className="messages hide-scroll-bar">

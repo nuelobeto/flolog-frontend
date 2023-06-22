@@ -31,7 +31,7 @@ const TokenPopup = ({ openTokenPopup, setOpenTokenPopup }: TokenPopupProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="token-popup">
+    <div className="modal-wrapper token-popup">
       <div className="modal token-modal">
         <CloseIcon
           className="close-modal"
@@ -66,7 +66,7 @@ const TokenPopup = ({ openTokenPopup, setOpenTokenPopup }: TokenPopupProps) => {
 
         <div className="token-packages">
           {packages.map((item, index) => (
-            <div className="package">
+            <div className="package" key={index}>
               <span className="package-title">{item.title}</span>
               <p className="package-feature">
                 <i>{item.feature}</i>
