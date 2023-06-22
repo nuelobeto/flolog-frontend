@@ -9,6 +9,8 @@ type ButtonProps = {
   rounded?: "sm" | "md" | "lg" | "full";
   style?: any;
   onClick?: () => void;
+  leftIcon?: any;
+  rightIcon?: any;
 };
 
 export const Button = ({
@@ -19,6 +21,8 @@ export const Button = ({
   rounded,
   style,
   onClick,
+  leftIcon,
+  rightIcon,
 }: ButtonProps) => {
   const btnSize =
     size === "sm" ? "sm" : size === "md" ? "md" : size === "lg" && "lg";
@@ -47,7 +51,7 @@ export const Button = ({
       className={`${btnSize} ${btnVariant} ${btnRounded}`}
       onClick={onClick}
     >
-      {children}
+      {leftIcon} {children} {rightIcon}
     </button>
   );
 };
