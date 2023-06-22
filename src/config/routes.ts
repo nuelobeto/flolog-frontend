@@ -6,6 +6,7 @@ export const ROUTES = {
   auth: "/auth",
   login: "/auth/login",
   signup: "/auth/signup",
+  verification: "/auth/verification",
   user_dashboard: "/user-dashboard",
   home: "/home",
   chat: "/chat",
