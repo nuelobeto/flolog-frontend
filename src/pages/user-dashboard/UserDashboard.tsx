@@ -1,9 +1,13 @@
 import "./UserDashboard.scss";
 import {
+  AsteriskIcon,
   CheckIcon,
   EditIcon,
+  HistoryIcon,
   NotifiationIcon,
+  UserIcon,
   VerifiedIcon,
+  WarningIcon,
 } from "../../assets/icons";
 import Select from "react-select";
 import { DropdownIcon } from "./../../assets/icons";
@@ -35,35 +39,46 @@ const genotype = [
   { value: "SS", label: "SS" },
   { value: "SC", label: "SC" },
 ];
-const medical_history = [
-  {
-    label: "Past Medical/Surgical History",
-    question:
-      "What notable disease or illness have you had in the past? have you had any surgery before? if yes , write the name of the surgery",
-  },
-  {
-    label: "Risk Factors, Social/Family History",
-    question: `Do you smoke? Do you drink? 
-    Also what prominent illness/disease do any of your parents or grand parents have?`,
-  },
-  {
-    label: "Allergy Status",
-    question: ` What drugs or substances do you react to?`,
-  },
+
+const medHistory = [
+  "Stomach Ulcer",
+  "Intestinal Surgery",
+  "Brain Surgery",
+  "Eye Surgery",
+  "Pile (Haemorrhoid)",
+  "Appendectomy",
+];
+
+const riskFactors = [
+  "Smoker",
+  "Drinks alcohol",
+  "Use Glasses",
+  "Parent had hypertension",
+  "Hypertension",
+  "Overweight",
+  "Air poution",
+];
+
+const allergies = [
+  "Peanut",
+  "Milk",
+  "Groundnut",
+  "Egg",
+  "Augmetin",
+  "Quinine",
+  "Artesunate",
+  "Dust",
+  "Cereals, wheat, rice",
 ];
 
 const UserDashboard = () => {
-  const [openEditableField, setOpenEditableField] = useState<null | number>(
-    null
-  );
   const [address, setAddress] = useState("");
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const addressRef = useRef<HTMLInputElement | null>(null);
   const [openBioData, setOpenBioData] = useState(false);
-  const [openMedData, setOpenMedData] = useState(false);
-  const [openShippingDetails, setOpenShippingDetails] = useState(false);
-  const [openActivity, setOpenActivity] = useState(false);
-  const [openSubHistory, setOpenSubHistory] = useState(false);
+  const [openMedHistory, setOpenMedHistory] = useState(false);
+  const [openRiskFactors, setOpenRiskFactors] = useState(false);
+  const [openAllergies, setOpenAllergies] = useState(false);
 
   const onEditAddress = (e: any) => {
     e.preventDefault();
@@ -112,119 +127,129 @@ const UserDashboard = () => {
         </div>
 
         <div className="info">
-          <div className="title" onClick={() => setOpenBioData(!openBioData)}>
-            <h3>Bio Data</h3>
-            <DropdownIcon className={`${openBioData && "rotate"}`} />
+          <div className="title">
+            <h3>Medical Records</h3>
           </div>
-          {openBioData && (
-            <div className="bio-data">
-              <div className="select-bio-data">
-                <label>Sex</label>
-                <Select className="select" options={sex} />
-              </div>
-              <div className="select-bio-data">
-                <label>Age</label>
-                <Select options={age} />
-              </div>
-              <div className="select-bio-data">
-                <label>Weight</label>
-                <Select options={[]} />
-              </div>
-              <div className="select-bio-data">
-                <label>Height</label>
-                <Select options={[]} />
-              </div>
-              <div className="select-bio-data">
-                <label>Blood Group</label>
-                <Select options={blood_group} />
-              </div>
-              <div className="select-bio-data">
-                <label>Genotype</label>
-                <Select options={genotype} />
-              </div>
+          <div className="medical-data">
+            <div className="sub-info">
+              <SubInfoHeader
+                icon={<UserIcon />}
+                text={"Bio Data"}
+                subtext={"Basic details about you"}
+                dropdown={
+                  <DropdownIcon className={`${openBioData && "rotate"}`} />
+                }
+                onClick={() => setOpenBioData(!openBioData)}
+              />
+              {openBioData && (
+                <div className="bio-data">
+                  <div className="select-bio-data">
+                    <label>Sex</label>
+                    <Select className="select" options={sex} />
+                  </div>
+                  <div className="select-bio-data">
+                    <label>Age</label>
+                    <Select options={age} />
+                  </div>
+                  <div className="select-bio-data">
+                    <label>Weight</label>
+                    <Select options={[]} />
+                  </div>
+                  <div className="select-bio-data">
+                    <label>Height</label>
+                    <Select options={[]} />
+                  </div>
+                  <div className="select-bio-data">
+                    <label>Blood Group</label>
+                    <Select options={blood_group} />
+                  </div>
+                  <div className="select-bio-data">
+                    <label>Genotype</label>
+                    <Select options={genotype} />
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+
+            <div className="sub-info">
+              <SubInfoHeader
+                icon={<HistoryIcon />}
+                text={"Past Medical History"}
+                subtext={"Select notable medical experiences you have had"}
+                dropdown={
+                  <DropdownIcon className={`${openMedHistory && "rotate"}`} />
+                }
+                onClick={() => setOpenMedHistory(!openMedHistory)}
+              />
+              {openMedHistory && <MedInfoSelection options={medHistory} />}
+            </div>
+
+            <div className="sub-info">
+              <SubInfoHeader
+                icon={<AsteriskIcon />}
+                text={"Risk factors, Social/Family History"}
+                subtext={"Select the options that apply to you"}
+                dropdown={
+                  <DropdownIcon className={`${openRiskFactors && "rotate"}`} />
+                }
+                onClick={() => setOpenRiskFactors(!openRiskFactors)}
+              />
+              {openRiskFactors && <MedInfoSelection options={riskFactors} />}
+            </div>
+
+            <div className="sub-info">
+              <SubInfoHeader
+                icon={<WarningIcon />}
+                text={"Allergy Status"}
+                subtext={"Food, medicines or substances you react to"}
+                dropdown={
+                  <DropdownIcon className={`${openAllergies && "rotate"}`} />
+                }
+                onClick={() => setOpenAllergies(!openAllergies)}
+              />
+              {openAllergies && <MedInfoSelection options={allergies} />}
+            </div>
+          </div>
         </div>
 
         <div className="info">
-          <div className="title" onClick={() => setOpenMedData(!openMedData)}>
-            <h3>Medical Data</h3>
-            <DropdownIcon className={`${openMedData && "rotate"}`} />
-          </div>
-          {openMedData && (
-            <div className="medical-data">
-              {medical_history.map((item, index) => (
-                <EditableField
-                  key={index}
-                  label={item.label}
-                  question={item.question}
-                  openEditableField={openEditableField}
-                  handleOpen={() =>
-                    openEditableField === index
-                      ? setOpenEditableField(null)
-                      : setOpenEditableField(index)
-                  }
-                  id={index}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="info">
-          <div
-            className="title"
-            onClick={() => setOpenShippingDetails(!openShippingDetails)}
-          >
+          <div className="title">
             <h3>Shipping Details</h3>
-            <DropdownIcon className={`${openShippingDetails && "rotate"}`} />
           </div>
-          {openShippingDetails && (
-            <div className="shipping-details">
-              <div className="shipping-input-field">
-                <input
-                  type="text"
-                  placeholder="142, Akpapava road, oppodite benin agb....."
-                  value={address}
-                  ref={addressRef}
-                  readOnly={!isEditingAddress}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-                {isEditingAddress ? (
-                  <CheckIcon
-                    className="save-icon"
-                    onClick={stopEditingAddress}
-                  />
-                ) : (
-                  <EditIcon className="edit-icon" onClick={onEditAddress} />
-                )}
-              </div>
+          <div className="shipping-details">
+            <div className="shipping-input-field">
+              <input
+                type="text"
+                placeholder="142, Akpapava road, oppodite benin agb....."
+                value={address}
+                ref={addressRef}
+                readOnly={!isEditingAddress}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+              {isEditingAddress ? (
+                <CheckIcon className="save-icon" onClick={stopEditingAddress} />
+              ) : (
+                <EditIcon className="edit-icon" onClick={onEditAddress} />
+              )}
             </div>
-          )}
+          </div>
         </div>
 
         <div className="info">
-          <div className="title" onClick={() => setOpenActivity(!openActivity)}>
+          <div className="title">
             <h3>Activity</h3>
-            <DropdownIcon className={`${openActivity && "rotate"}`} />
           </div>
-          {openActivity && (
-            <div className="activity">
-              <p>12/01/23 - Live chat</p>
-              <p>12/01/23 - Offline message</p>
-              <p>12/01/23 - Video call</p>
-              <p>12/01/23 -Medication request</p>
-            </div>
-          )}
+          <div className="activity">
+            <p>12/01/23 - Live chat</p>
+            <p>12/01/23 - Offline message</p>
+            <p>12/01/23 - Video call</p>
+            <p>12/01/23 -Medication request</p>
+          </div>
         </div>
 
         <div className="info">
-          <div
-            className="title"
-            onClick={() => setOpenSubHistory(!openSubHistory)}
-          >
+          <div className="title">
             <h3>Subscription History</h3>
-            <DropdownIcon className={`${openSubHistory && "rotate"}`} />
           </div>
         </div>
       </main>
@@ -232,41 +257,49 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
-
-const EditableField = ({
-  label,
-  question,
-  openEditableField,
-  handleOpen,
-  id,
+const SubInfoHeader = ({
+  text,
+  subtext,
+  icon,
+  dropdown,
+  onClick,
 }: {
-  label: string;
-  question: string;
-  openEditableField: null | number;
-  handleOpen: () => void;
-  id: number;
+  text: string;
+  subtext: string;
+  icon: React.ReactNode;
+  dropdown: React.ReactNode;
+  onClick: () => void;
 }) => {
   return (
-    <div className="editable-field">
-      <div className={`input-header ${openEditableField === id && "border"}`}>
-        <label>{label}</label>
-        {openEditableField === id ? (
-          <CheckIcon className="save-icon" onClick={handleOpen} />
-        ) : (
-          <EditIcon className="edit-icon" onClick={handleOpen} />
-        )}
+    <div className="sub-info-header" onClick={onClick}>
+      <div className="icon">{icon}</div>
+      <div className="text">
+        <h4>{text}</h4>
+        <p>{subtext}</p>
       </div>
-      <div
-        className={`input-body ${
-          openEditableField === id && "open-input-body"
-        }`}
-      >
-        <div className="question">{question}</div>
-        <div className="answer">
-          <textarea placeholder="Enter answer..."></textarea>
-        </div>
+      {dropdown}
+    </div>
+  );
+};
+
+const MedInfoSelection = ({ options }: { options: any[] }) => {
+  return (
+    <div className="med-info-selection">
+      <div className="options">
+        {options.map((option, index) => (
+          <div className="option" key={index}>
+            <div className="check-circle"></div>
+            <label>{option}</label>
+          </div>
+        ))}
+      </div>
+
+      <div className="custom-options">
+        <label>Others:</label>
+        <input type="text" />
       </div>
     </div>
   );
 };
+
+export default UserDashboard;

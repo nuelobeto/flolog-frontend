@@ -8,3 +8,10 @@ export type RegisterT = {
   city: string;
   password: string;
 };
+
+export type LoginT = {
+  email: string;
+  password: string;
+};
+
+export type UserT = {};

@@ -6,6 +6,7 @@ import {
   MdNotifications,
   MdOutlineEdit,
   MdVerified,
+  MdWarning,
 } from "react-icons/md";
 import {
   BsApple,
@@ -17,6 +18,8 @@ import {
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { BiChevronRight } from "react-icons/bi";
+import { FaRegUser } from "react-icons/fa";
+import { RiAsterisk, RiHistoryFill } from "react-icons/ri";
 
 export const MenuIcon = MdMenu;
 export const CloseIcon = MdClose;
@@ -33,3 +36,7 @@ export const FileIcon = AiOutlineFileSearch;
 export const RightArrow = BiChevronRight;
 export const AddIcon = MdAddCircle;
 export const BackArrowIcon = BsArrowLeft;
+export const UserIcon = FaRegUser;
+export const HistoryIcon = RiHistoryFill;
+export const AsteriskIcon = RiAsterisk;
+export const WarningIcon = MdWarning;

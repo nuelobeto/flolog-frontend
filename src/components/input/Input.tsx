@@ -10,6 +10,7 @@ type InputProps = {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   onClick?: () => void;
+  error?: any;
 };
 
 export const FormInput = (props: InputProps) => {
@@ -37,6 +38,7 @@ export const FormInput = (props: InputProps) => {
           <button className="right">{props.rightIcon}</button>
         )}
       </div>
+      {props.error && <div className="input-error">{props.error[0]}</div>}
     </div>
   );
 };

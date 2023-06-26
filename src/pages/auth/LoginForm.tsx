@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AppStoreButtons,
   Button,
@@ -8,18 +8,35 @@ import {
 import Footer from "../../components/footer/Footer";
 import { FormInput } from "../../components/input/Input";
 import { ROUTES } from "../../config/routes";
+import useAuth from "../../store/useAuth";
+import { LoginT } from "../../types/type";
 import "./Auth.scss";
 
 const LoginForm = () => {
+  const { user, login, loading, error } = useAuth((state) => state);
   const [formData, setFormData] = useState({
     mobile_or_email: "",
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
+
+    const payload: LoginT = {
+      email: formData.mobile_or_email,
+      password: formData.password,
+    };
+
+    login(payload);
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(ROUTES.user_dashboard);
+    }
+  }, [user]);
 
   return (
     <>
@@ -34,6 +51,7 @@ const LoginForm = () => {
               value={formData.mobile_or_email}
               setValue={setFormData}
               label={"Phone number or email"}
+              error={error?.email}
             />
             <FormInput
               type={"password"}
@@ -41,6 +59,7 @@ const LoginForm = () => {
               value={formData.password}
               setValue={setFormData}
               label={"Password"}
+              error={error?.password}
             />
 
             <Button
@@ -50,7 +69,7 @@ const LoginForm = () => {
               rounded={"sm"}
               style={{ width: "235px", height: "46px", margin: "1rem 0 0" }}
             >
-              Sign In
+              {!loading ? "Sign In" : "Loading..."}
             </Button>
 
             <div className="or-divider">
