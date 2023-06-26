@@ -11,6 +11,7 @@ import { ROUTES } from "../../config/routes";
 import "./Auth.scss";
 import { RegisterT } from "../../types/type";
 import useAuth from "../../store/useAuth";
+import { SpinnerIcon } from "../../assets/icons";
 
 const SignupForm = () => {
   const { user, register, loading, error } = useAuth((state) => state);
@@ -147,7 +148,11 @@ const SignupForm = () => {
               rounded={"sm"}
               style={{ width: "235px", height: "46px", margin: "1rem 0 0" }}
             >
-              {!loading ? "Create account" : "Loading.."}
+              {!loading ? (
+                "Create account"
+              ) : (
+                <SpinnerIcon className="spinner" />
+              )}
             </Button>
 
             <div className="or-divider">

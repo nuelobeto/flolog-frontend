@@ -80,3 +80,17 @@ button {
     cursor: pointer;
   }
 }
+
+.spinner {
+  animation: Rotate 1.6s linear 0s infinite forwards;
+  font-size: 25px;
+}
+
+@keyframes Rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { SpinnerIcon } from "../../assets/icons";
 import {
   AppStoreButtons,
   Button,
@@ -69,7 +70,7 @@ const LoginForm = () => {
               rounded={"sm"}
               style={{ width: "235px", height: "46px", margin: "1rem 0 0" }}
             >
-              {!loading ? "Sign In" : "Loading..."}
+              {!loading ? "Sign In" : <SpinnerIcon className="spinner" />}
             </Button>
 
             <div className="or-divider">
