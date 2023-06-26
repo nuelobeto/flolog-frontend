@@ -112,21 +112,11 @@
 
 .info {
   padding: 1rem;
+  margin-bottom: 1.5rem;
 
   .title {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    font-size: 15px;
     margin-bottom: 1rem;
-
-    svg.dropdown {
-      font-size: 35px;
-      transform: rotate(-90deg);
-
-      &.rotate {
-        transform: rotate(0deg);
-      }
-    }
   }
 
   label {

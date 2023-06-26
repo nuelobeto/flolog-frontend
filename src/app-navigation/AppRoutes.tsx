@@ -34,15 +34,15 @@ const AppRoutes = () => {
         <Route path={ROUTES.login} element={<LoginForm />} />
         <Route path={ROUTES.verification} element={<Verification />} />
 
-        {/* <Route element={<ProtectedRoutes isAllowed={user} />}> */}
-        <Route path={ROUTES.user_dashboard} element={<UserDashboard />} />
-        <Route path={ROUTES.home} element={<Home />} />
-        <Route path={ROUTES.chat} element={<Chat />} />
-        <Route
-          path={ROUTES.request_medication}
-          element={<RequestMedication />}
-        />
-        {/* </Route> */}
+        <Route element={<ProtectedRoutes isAllowed={user} />}>
+          <Route path={ROUTES.user_dashboard} element={<UserDashboard />} />
+          <Route path={ROUTES.home} element={<Home />} />
+          <Route path={ROUTES.chat} element={<Chat />} />
+          <Route
+            path={ROUTES.request_medication}
+            element={<RequestMedication />}
+          />
+        </Route>
       </Routes>
       <ToastContainer />
     </PhoneContainer>
