@@ -50,4 +50,13 @@
       }
     }
   }
+
+  .input-error {
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: #fff;
+    background-color: #fb6060;
+    font-size: 12px;
+    width: 100%;
+  }
 }

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AppStoreButtons,
   Button,
@@ -9,10 +9,11 @@ import Footer from "../../components/footer/Footer";
 import { FormInput } from "../../components/input/Input";
 import { ROUTES } from "../../config/routes";
 import "./Auth.scss";
-import authServices from "./../../services/authServices";
 import { RegisterT } from "../../types/type";
+import useAuth from "../../store/useAuth";
 
 const SignupForm = () => {
+  const { user, register, loading, error } = useAuth((state) => state);
   const [formData, setFormData] = useState({
     email: "",
     first_name: "",
@@ -25,7 +26,7 @@ const SignupForm = () => {
     confirm_password: "",
   });
   const [agreeToTerms, setAgreeToTerms] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleCreateAccount = async (
     event: React.FormEvent<HTMLFormElement>
@@ -43,17 +44,14 @@ const SignupForm = () => {
       password: formData.password,
     };
 
-    setLoading(true);
-
-    try {
-      const result = await authServices.register_client(payload);
-      setLoading(false);
-      console.log(result);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    register(payload);
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(ROUTES.user_dashboard);
+    }
+  }, [user]);
 
   return (
     <>
@@ -68,6 +66,7 @@ const SignupForm = () => {
               value={formData.first_name}
               setValue={setFormData}
               label={"First Name"}
+              error={error?.first_name}
             />
             <FormInput
               type={"text"}
@@ -75,6 +74,7 @@ const SignupForm = () => {
               value={formData.last_name}
               setValue={setFormData}
               label={"Last Name"}
+              error={error?.last_name}
             />
             <FormInput
               type={"tel"}
@@ -82,6 +82,7 @@ const SignupForm = () => {
               value={formData.phone_number}
               setValue={setFormData}
               label={"Mobile Number"}
+              error={error?.phone_number}
             />
             <FormInput
               type={"email"}
@@ -89,6 +90,7 @@ const SignupForm = () => {
               value={formData.email}
               setValue={setFormData}
               label={"Email Address"}
+              error={error?.email}
             />
             <FormInput
               type={"text"}
@@ -96,6 +98,7 @@ const SignupForm = () => {
               value={formData.country}
               setValue={setFormData}
               label={"Country"}
+              error={error?.country}
             />
             <FormInput
               type={"text"}
@@ -103,6 +106,7 @@ const SignupForm = () => {
               value={formData.state}
               setValue={setFormData}
               label={"State"}
+              error={error?.state}
             />
             <FormInput
               type={"text"}
@@ -110,6 +114,7 @@ const SignupForm = () => {
               value={formData.city}
               setValue={setFormData}
               label={"City"}
+              error={error?.city}
             />
             <FormInput
               type={"password"}
@@ -117,6 +122,7 @@ const SignupForm = () => {
               value={formData.password}
               setValue={setFormData}
               label={"Password"}
+              error={error?.password}
             />
             <FormInput
               type={"password"}
@@ -124,6 +130,7 @@ const SignupForm = () => {
               value={formData.confirm_password}
               setValue={setFormData}
               label={"Confirm Password"}
+              error={error?.password}
             />
             <div className="check-box">
               <input type="checkbox" />

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../config/routes";
+import useAuth from "../../store/useAuth";
 import "./MenuCard.scss";
 
 type MenuProps = {
@@ -10,6 +11,7 @@ type MenuProps = {
 
 const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
   const { pathname } = useLocation();
+  const { user } = useAuth((state) => state);
 
   useEffect(() => {
     setShowMenu(false);
@@ -22,16 +24,21 @@ const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
           {link.name}
         </Link>
       ))}
+      {!user ? (
+        <Link to={ROUTES.auth}>Log In</Link>
+      ) : (
+        <div className="logout">Log out</div>
+      )}
     </div>
   );
 };
-
-export default MenuCard;
 
 const links = [
   { name: "Home", url: ROUTES.home },
   { name: "Dashboard", url: ROUTES.user_dashboard },
   { name: "Blog", url: ROUTES.blog },
   { name: "About Us", url: ROUTES.about_us },
-  { name: "Log In", url: ROUTES.auth },
+  // { name: "Log In", url: ROUTES.auth },
 ];
+
+export default MenuCard;
