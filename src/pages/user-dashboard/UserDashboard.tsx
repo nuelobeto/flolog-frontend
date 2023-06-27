@@ -283,12 +283,23 @@ const SubInfoHeader = ({
 };
 
 const MedInfoSelection = ({ options }: { options: any[] }) => {
+  const [selected, setSelected] = useState<any[]>([]);
+
+  const handleSelect = (option: string) => {
+    setSelected([...selected, option]);
+  };
+
   return (
     <div className="med-info-selection">
       <div className="options">
         {options.map((option, index) => (
           <div className="option" key={index}>
-            <div className="check-circle"></div>
+            <div
+              className={`check-circle ${
+                selected.includes(option) && "selected"
+              }`}
+              onClick={() => handleSelect(option)}
+            ></div>
             <label>{option}</label>
           </div>
         ))}

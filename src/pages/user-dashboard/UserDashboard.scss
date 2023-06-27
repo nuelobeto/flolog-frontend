@@ -266,11 +266,14 @@
       gap: 8px;
 
       .check-circle {
-        width: 12px;
+        width: 16px;
         aspect-ratio: 1/1;
         border-radius: 50%;
-        border: 1px solid #c4c4c4;
-        padding: 2px;
+        border: 2px solid #c4c4c4;
+
+        &.selected {
+          background-color: var(--primary);
+        }
       }
     }
   }
