@@ -19,9 +19,14 @@ const login = async (payload: LoginT) => {
   return response.data;
 };
 
+const logout = () => {
+  localStorage.removeItem("user");
+};
+
 const authServices = {
   register_client,
   login,
+  logout,
 };
 
 export default authServices;

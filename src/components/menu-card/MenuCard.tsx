@@ -11,7 +11,12 @@ type MenuProps = {
 
 const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
   const { pathname } = useLocation();
-  const { user } = useAuth((state) => state);
+  const { user, logout } = useAuth((state) => state);
+
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  };
 
   useEffect(() => {
     setShowMenu(false);
@@ -27,7 +32,9 @@ const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
       {!user ? (
         <Link to={ROUTES.auth}>Log In</Link>
       ) : (
-        <div className="logout">Log out</div>
+        <div className="logout" onClick={handleLogout}>
+          Log out
+        </div>
       )}
     </div>
   );

@@ -12,6 +12,9 @@ import {
 import Select from "react-select";
 import { DropdownIcon } from "./../../assets/icons";
 import { useRef, useState } from "react";
+import useProfile from "../../store/useProfile";
+import { formatStringDate } from "../../utils/dateConverter";
+import profileServices from "./../../services/profileServices";
 
 const sex = [
   { value: "male", label: "Male" },
@@ -72,6 +75,9 @@ const allergies = [
 ];
 
 const UserDashboard = () => {
+  const { profile, getProfileLoading, userActivity, bioData } = useProfile(
+    (state) => state
+  );
   const [address, setAddress] = useState("");
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const addressRef = useRef<HTMLInputElement | null>(null);
@@ -116,9 +122,21 @@ const UserDashboard = () => {
             <img src="/images/profile.webp" alt="" />
             <EditIcon />
           </div>
-          <p className="name">Efosa Emonbeifo</p>
-          <p className="email">efosaemonbeifo@flolog.co</p>
-          <p className="mobile">081000000000</p>
+          {!getProfileLoading ? (
+            <>
+              <p className="name">
+                {profile?.first_name} {profile?.last_name}
+              </p>
+              <p className="email">{profile?.email}</p>
+              <p className="mobile">0{profile?.phone_number}</p>
+            </>
+          ) : (
+            <>
+              <p className="name loading"></p>
+              <p className="email loading"></p>
+              <p className="mobile loading"></p>
+            </>
+          )}
         </div>
 
         <div className="premium">
@@ -240,10 +258,11 @@ const UserDashboard = () => {
             <h3>Activity</h3>
           </div>
           <div className="activity">
-            <p>12/01/23 - Live chat</p>
-            <p>12/01/23 - Offline message</p>
-            <p>12/01/23 - Video call</p>
-            <p>12/01/23 -Medication request</p>
+            {userActivity.map((activity, index) => (
+              <p key={index}>
+                {formatStringDate(activity.timestamp)} - {activity.action}
+              </p>
+            ))}
           </div>
         </div>
 
