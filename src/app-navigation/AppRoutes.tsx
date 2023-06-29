@@ -14,16 +14,13 @@ import RequestMedication from "../pages/request-medication/RequestMedication";
 import Verification from "../pages/auth/Verification";
 import ProtectedRoutes from "./ProtectedRoutes";
 import useAuth from "../store/useAuth";
-import { useEffect } from "react";
+import useAuthEffects from "./../hooks/AuthEffects";
+import useProfileEffects from "../hooks/ProfileEffects";
 
 const AppRoutes = () => {
-  const { user, error, success, resetAuth } = useAuth((state) => state);
-
-  useEffect(() => {
-    if (success || error) {
-      resetAuth();
-    }
-  }, [error, success]);
+  const { user } = useAuth((state) => state);
+  useAuthEffects();
+  useProfileEffects();
 
   return (
     <PhoneContainer>
@@ -34,15 +31,15 @@ const AppRoutes = () => {
         <Route path={ROUTES.login} element={<LoginForm />} />
         <Route path={ROUTES.verification} element={<Verification />} />
 
-        {/* <Route element={<ProtectedRoutes isAllowed={user} />}> */}
-        <Route path={ROUTES.user_dashboard} element={<UserDashboard />} />
-        <Route path={ROUTES.home} element={<Home />} />
-        <Route path={ROUTES.chat} element={<Chat />} />
-        <Route
-          path={ROUTES.request_medication}
-          element={<RequestMedication />}
-        />
-        {/* </Route> */}
+        <Route element={<ProtectedRoutes isAllowed={user} />}>
+          <Route path={ROUTES.user_dashboard} element={<UserDashboard />} />
+          <Route path={ROUTES.home} element={<Home />} />
+          <Route path={ROUTES.chat} element={<Chat />} />
+          <Route
+            path={ROUTES.request_medication}
+            element={<RequestMedication />}
+          />
+        </Route>
       </Routes>
       <ToastContainer />
     </PhoneContainer>

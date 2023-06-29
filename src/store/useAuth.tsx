@@ -7,6 +7,7 @@ type UserStateT = {
   loading: boolean;
   error: any;
   success: boolean;
+  token: null | string;
   setUser: (user: null | any) => void;
   googleAuth: () => void;
   login: (payload: LoginT) => void;
@@ -20,11 +21,20 @@ const parsedUser: any | undefined = savedUser
   ? JSON.parse(savedUser)
   : undefined;
 
+let accessToken = "";
+
+if (parsedUser) {
+  const tokensData = parsedUser.data.tokens.replace(/'/g, '"');
+  const tokens = JSON.parse(tokensData);
+  accessToken = tokens.access;
+}
+
 const useAuth = create<UserStateT>((set) => ({
   user: parsedUser ? parsedUser : null,
   loading: false,
   error: "",
   success: false,
+  token: accessToken ? accessToken : null,
 
   setUser: (user: null | any) => {
     set((state) => ({ user: (state.user = user) }));
@@ -36,9 +46,14 @@ const useAuth = create<UserStateT>((set) => ({
     set((state) => ({ loading: (state.loading = true) }));
     try {
       const user = await authServices.login(payload);
+      const tokensData = user.tokens.replace(/'/g, '"');
+      const tokens = JSON.parse(tokensData);
+      accessToken = tokens.access;
+
       set((state) => ({ loading: (state.loading = false) }));
       set((state) => ({ success: (state.success = true) }));
       set((state) => ({ user: (state.user = user) }));
+      set((state) => ({ token: (state.token = accessToken) }));
     } catch (error: any) {
       set((state) => ({ loading: (state.loading = false) }));
       set((state) => ({ error: (state.error = error.response.data) }));
@@ -57,7 +72,9 @@ const useAuth = create<UserStateT>((set) => ({
     }
   },
 
-  logout: async () => {},
+  logout: async () => {
+    authServices.logout();
+  },
 
   resetAuth: () => {
     set((state) => ({ loading: (state.loading = false) }));
