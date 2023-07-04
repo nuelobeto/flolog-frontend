@@ -10,8 +10,15 @@ type ProfileStateT = {
   updateProfile: () => void;
   userActivity: any[];
   getUserActivity: (token: string) => void;
-  bioData: any;
+  bioData: any | null;
   getBioData: (token: string) => void;
+  uuid: string | null;
+  medicalHistory: any | null;
+  getMedicalHistory: (token: string) => void;
+  riskFactors: any | null;
+  getRiskFactors: (token: string) => void;
+  allergies: any | null;
+  getAllergies: (token: string) => void;
 };
 
 const useProfile = create<ProfileStateT>((set) => ({
@@ -21,6 +28,10 @@ const useProfile = create<ProfileStateT>((set) => ({
   userActivity: [],
   error: "",
   bioData: null,
+  uuid: null,
+  medicalHistory: null,
+  riskFactors: null,
+  allergies: null,
 
   getProfile: async (token: string) => {
     set((state) => ({ getProfileLoading: (state.getProfileLoading = true) }));
@@ -31,6 +42,7 @@ const useProfile = create<ProfileStateT>((set) => ({
         getProfileLoading: (state.getProfileLoading = false),
       }));
       set((state) => ({ profile: (state.profile = profile) }));
+      set((state) => ({ uuid: (state.uuid = profile.user) }));
     } catch (error) {
       set((state) => ({
         getProfileLoading: (state.getProfileLoading = false),
@@ -54,6 +66,39 @@ const useProfile = create<ProfileStateT>((set) => ({
     try {
       const bioData = await profileServices.getBioData(token);
       set((state) => ({ bioData: (state.bioData = bioData) }));
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getMedicalHistory: async (token: string) => {
+    try {
+      const medicalHistory = await profileServices.getMedicalHistory(token);
+      set((state) => ({
+        medicalHistory: (state.medicalHistory = medicalHistory),
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getRiskFactors: async (token: string) => {
+    try {
+      const riskFactors = await profileServices.getRiskFactors(token);
+      set((state) => ({
+        riskFactors: (state.riskFactors = riskFactors),
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getAllergies: async (token: string) => {
+    try {
+      const allergies = await profileServices.getAllergies(token);
+      set((state) => ({
+        allergies: (state.allergies = allergies),
+      }));
     } catch (error) {
       console.log(error);
     }

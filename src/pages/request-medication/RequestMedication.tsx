@@ -5,27 +5,67 @@ import {
   CloseIcon,
   FileIcon,
   RightArrow,
+  SpinnerIcon,
 } from "../../assets/icons";
 import { Button } from "../../components/button/Button";
 import FileInput from "../../components/file-input/FileInput";
+import Select from "../../components/select/Select";
 import "./RequestMedication.scss";
-import Select from "react-select";
+import medicationServices from "./../../services/medicationServices";
+import useAuth from "../../store/useAuth";
+import useProfile from "./../../store/useProfile";
 
-type NaviagtionProps = {
+type UploadPrescriptionProps = {
   next?: () => void;
   back?: () => void;
+  formData: any;
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+  file: null | any;
+  setFile: React.Dispatch<React.SetStateAction<any>>;
+  dosageForm: string;
+  setDosageForm: React.Dispatch<React.SetStateAction<string>>;
+  prescriptions: any[];
+  setPrescriptions: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
-const UploadPrescription = ({ next }: NaviagtionProps) => {
-  const [file, setFile] = useState<any | null>(null);
-  const [formData, setFormData] = useState({
-    generic_name: "",
-    brand_name: "",
-    dosage_strength: "",
-    quantity: "",
-    comments: "",
-  });
-  const [prescriptions, setPrescriptions] = useState<any[]>([1, 2]);
+type AddAddressProps = {
+  next?: () => void;
+  back?: () => void;
+  file: null | any;
+  formData: any;
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+  state: string;
+  setState: React.Dispatch<React.SetStateAction<string>>;
+  prescriptions: any[];
+};
+
+const UploadPrescription = ({
+  next,
+  formData,
+  setFormData,
+  dosageForm,
+  setDosageForm,
+  prescriptions,
+  setPrescriptions,
+  file,
+  setFile,
+}: UploadPrescriptionProps) => {
+  const addPrescription = () => {
+    const payload = {
+      generic_name: formData.generic_name,
+      brand_name: formData.brand_name,
+      dosage_form: dosageForm.toUpperCase(),
+      dosage_strength: formData.dosage_strength,
+      extra_info: formData.quantity,
+    };
+    setPrescriptions([...prescriptions, payload]);
+  };
+
+  const removePrescription = (name: string) => {
+    setPrescriptions(
+      prescriptions.filter((item) => item.generic_name !== name)
+    );
+  };
 
   return (
     <div className="screen">
@@ -37,6 +77,7 @@ const UploadPrescription = ({ next }: NaviagtionProps) => {
             image={<FileIcon style={{ fontSize: "30px" }} />}
             text={"Select file"}
             setFile={setFile}
+            file={file}
           />
         </div>
 
@@ -46,6 +87,7 @@ const UploadPrescription = ({ next }: NaviagtionProps) => {
           variant={"filled"}
           rounded={"md"}
           style={{ background: "#2E83B5", border: "1px solid #2E83B5" }}
+          onClick={next}
         >
           Upload Prescription
         </Button>
@@ -57,12 +99,16 @@ const UploadPrescription = ({ next }: NaviagtionProps) => {
         Please fill with the information on your prescription.
       </p>
 
-      {prescriptions.length !== 0 && (
+      {prescriptions?.length !== 0 && (
         <div className="prescriptions">
           {prescriptions.map((item, index) => (
             <div className="prescription-wrapper" key={index}>
-              <div className="prescription">Paracetamol - Emzor - Tablets</div>
-              <CloseIcon />
+              <div className="prescription">
+                {item.generic_name} - {item.brand_name} - {item.dosage_form}
+              </div>
+              <CloseIcon
+                onClick={() => removePrescription(item.generic_name)}
+              />
             </div>
           ))}
         </div>
@@ -92,9 +138,11 @@ const UploadPrescription = ({ next }: NaviagtionProps) => {
             Dosage Form <span>*</span>
           </label>
           <Select
-            className="react-select-container"
-            classNamePrefix="react-select"
-            options={[]}
+            height={"50px"}
+            placeholder={"Select"}
+            value={dosageForm}
+            setValue={setDosageForm}
+            options={[{ label: "Tablets", value: "Tablet" }]}
           />
         </div>
 
@@ -124,6 +172,7 @@ const UploadPrescription = ({ next }: NaviagtionProps) => {
           variant={"filled"}
           leftIcon={<AddIcon style={{ fontSize: "30px" }} />}
           style={{ gap: "0.5rem" }}
+          onClick={addPrescription}
         >
           Add
         </Button>
@@ -144,15 +193,45 @@ const UploadPrescription = ({ next }: NaviagtionProps) => {
   );
 };
 
-const AddAddress = ({ next, back }: NaviagtionProps) => {
-  const [formData, setFormData] = useState({
-    number: "",
-    name: "",
-    address: "",
-    state: "",
-    city: "",
-  });
+const AddAddress = ({
+  next,
+  back,
+  formData,
+  setFormData,
+  state,
+  setState,
+  file,
+  prescriptions,
+}: AddAddressProps) => {
+  const { token } = useAuth((state) => state);
+  const { uuid } = useProfile((state) => state);
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [loadingRequest, setLoadingRequest] = useState(false);
+
+  const handleRequestMedication = async () => {
+    const payload = {
+      owner: uuid,
+      upload_prescription: file,
+      medication_details: prescriptions,
+      recipent_name: formData.name,
+      recipent_phone_number: formData.number,
+      recipent_address: formData.address,
+      state,
+      city: formData.city,
+    };
+
+    if (token) {
+      setLoadingRequest(true);
+      try {
+        await medicationServices.requestMedication(token, payload);
+        console.log("request sent");
+        setLoadingRequest(false);
+      } catch (error) {
+        setLoadingRequest(false);
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <>
@@ -208,9 +287,11 @@ const AddAddress = ({ next, back }: NaviagtionProps) => {
                 State <span>*</span>
               </label>
               <Select
-                className="react-select-container"
-                classNamePrefix="react-select"
-                options={[]}
+                height={"50px"}
+                placeholder={"Select"}
+                value={state}
+                setValue={setState}
+                options={[{ label: "Edo State", value: "Edo State" }]}
               />
             </div>
 
@@ -265,8 +346,9 @@ const AddAddress = ({ next, back }: NaviagtionProps) => {
                 color={"primary"}
                 variant={"filled"}
                 rounded={"md"}
+                onClick={handleRequestMedication}
               >
-                Yes
+                {!loadingRequest ? "Yes" : <SpinnerIcon className="spinner" />}
               </Button>
             </div>
           </div>
@@ -277,6 +359,21 @@ const AddAddress = ({ next, back }: NaviagtionProps) => {
 };
 
 const RequestMedication = () => {
+  const [file, setFile] = useState<any | null>(null);
+  const [formData, setFormData] = useState({
+    generic_name: "",
+    brand_name: "",
+    dosage_strength: "",
+    quantity: "",
+    comments: "",
+    number: "",
+    name: "",
+    address: "",
+    city: "",
+  });
+  const [dosageForm, setDosageForm] = useState("");
+  const [prescriptions, setPrescriptions] = useState<any[]>([]);
+  const [state, setState] = useState("");
   const [screen, setScreen] = useState(1);
 
   const next = () => {
@@ -293,8 +390,31 @@ const RequestMedication = () => {
   return (
     <>
       <main className="request-medication main">
-        {screen === 1 && <UploadPrescription next={next} />}
-        {screen === 2 && <AddAddress next={next} back={back} />}
+        {screen === 1 && (
+          <UploadPrescription
+            next={next}
+            formData={formData}
+            setFormData={setFormData}
+            dosageForm={dosageForm}
+            setDosageForm={setDosageForm}
+            prescriptions={prescriptions}
+            setPrescriptions={setPrescriptions}
+            file={file}
+            setFile={setFile}
+          />
+        )}
+        {screen === 2 && (
+          <AddAddress
+            next={next}
+            back={back}
+            formData={formData}
+            setFormData={setFormData}
+            state={state}
+            setState={setState}
+            file={file}
+            prescriptions={prescriptions}
+          />
+        )}
       </main>
     </>
   );

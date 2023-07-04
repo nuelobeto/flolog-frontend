@@ -4,9 +4,14 @@ import useProfile from "../store/useProfile";
 
 const useProfileEffects = () => {
   const { token } = useAuth((state) => state);
-  const { getProfile, getUserActivity, getBioData } = useProfile(
-    (state) => state
-  );
+  const {
+    getProfile,
+    getUserActivity,
+    getBioData,
+    getMedicalHistory,
+    getRiskFactors,
+    getAllergies,
+  } = useProfile((state) => state);
 
   useEffect(() => {
     if (!token) {
@@ -15,6 +20,9 @@ const useProfileEffects = () => {
     getProfile(token);
     getUserActivity(token);
     getBioData(token);
+    getMedicalHistory(token);
+    getRiskFactors(token);
+    getAllergies(token);
   }, [token]);
 };
 

@@ -43,8 +43,8 @@ const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
 const links = [
   { name: "Home", url: ROUTES.home },
   { name: "Dashboard", url: ROUTES.user_dashboard },
-  { name: "Blog", url: ROUTES.blog },
-  { name: "About Us", url: ROUTES.about_us },
+  // { name: "Blog", url: ROUTES.blog },
+  // { name: "About Us", url: ROUTES.about_us },
   // { name: "Log In", url: ROUTES.auth },
 ];
 
