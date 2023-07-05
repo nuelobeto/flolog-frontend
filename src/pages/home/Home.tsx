@@ -17,18 +17,14 @@ const Home = () => {
 
   const requestChat = async () => {
     if (token) {
-      if (profile?.coin === 0) {
-        setOpenTokenPopup(true);
-      } else {
-        try {
-          await chatServices.requestChat(token);
-          navigate(ROUTES.chat);
-        } catch (error: any) {
-          const errorMessage = error.response.data.error;
-          toast.error(errorMessage);
-          if (errorMessage.includes("Insufficient")) {
-            setOpenTokenPopup(true);
-          }
+      try {
+        await chatServices.requestChat(token);
+        navigate(ROUTES.chat);
+      } catch (error: any) {
+        const errorMessage = error.response.data.error;
+        toast.error(errorMessage);
+        if (errorMessage.includes("Insufficient")) {
+          setOpenTokenPopup(true);
         }
       }
     }
