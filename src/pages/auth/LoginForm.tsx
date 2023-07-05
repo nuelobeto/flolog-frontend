@@ -14,7 +14,9 @@ import { LoginT } from "../../types/type";
 import "./Auth.scss";
 
 const LoginForm = () => {
-  const { user, login, loading, error } = useAuth((state) => state);
+  const { user, login, loading, error, is_pharmacist } = useAuth(
+    (state) => state
+  );
   const [formData, setFormData] = useState({
     mobile_or_email: "",
     password: "",
@@ -35,9 +37,13 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (user) {
-      navigate(ROUTES.user_dashboard);
+      if (is_pharmacist) {
+        navigate(ROUTES.consultant_dashboard);
+      } else {
+        navigate(ROUTES.client_dashboard);
+      }
     }
-  }, [user]);
+  }, [user, is_pharmacist]);
 
   return (
     <>

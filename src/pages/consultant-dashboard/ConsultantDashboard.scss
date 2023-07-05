@@ -1,0 +1,153 @@
+.consultant-dashboard {
+  padding: 4rem 1rem 0;
+
+  .profile {
+    background-color: #2e83b5;
+    padding: 2rem 0;
+    display: flex;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+
+    & > div {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 1rem;
+    }
+
+    .consultant-info {
+      border-right: 2px solid #fff;
+
+      .user-img {
+        width: 100px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        position: relative;
+        margin-bottom: 1rem;
+
+        img {
+          width: 100%;
+          border-radius: 50%;
+        }
+
+        svg {
+          position: absolute;
+          background-color: #d9d9d9;
+          padding: 5px;
+          border-radius: 50%;
+          font-size: 30px;
+          right: 0;
+          bottom: 10px;
+          cursor: pointer;
+        }
+      }
+
+      p {
+        margin-bottom: 5px;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+
+        &.loading {
+          width: 250px;
+          height: 30px;
+          background-color: #2e84b5b0;
+          margin-bottom: 8px;
+          border-radius: 8px;
+        }
+      }
+
+      .name {
+        font-size: 16px;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .email {
+        font-size: 14px;
+        color: #fff;
+      }
+
+      .mobile {
+        font-size: 14px;
+        color: #bcb8b8;
+      }
+    }
+
+    .earnings {
+      gap: 1rem;
+
+      p {
+        width: 100%;
+        text-align: center;
+        font-size: 15px;
+        color: #fff;
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .edit-consultant-profile {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: #2e83b5;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 1.5rem 1.5rem 0;
+      gap: 0.5rem;
+
+      .edit-profile-header {
+        display: flex;
+        color: #fff;
+        align-items: center;
+        gap: 0.75rem;
+
+        svg {
+          font-size: 25px;
+          cursor: pointer;
+        }
+      }
+
+      input {
+        height: 40px;
+        width: 100%;
+        outline: none;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        padding-left: 1rem;
+        font-size: 15px;
+        background-color: #f5f5f5;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .actions {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+
+    button {
+      width: 35%;
+      min-width: 100px;
+      height: 70px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      font-weight: 700;
+    }
+  }
+}

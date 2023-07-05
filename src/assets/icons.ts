@@ -19,7 +19,7 @@ import { IoLogoGooglePlaystore } from "react-icons/io5";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { BiChevronRight } from "react-icons/bi";
 import { FaRegUser, FaSpinner } from "react-icons/fa";
-import { RiAsterisk, RiHistoryFill } from "react-icons/ri";
+import { RiAsterisk, RiFolderOpenFill, RiHistoryFill } from "react-icons/ri";
 
 export const MenuIcon = MdMenu;
 export const CloseIcon = MdClose;
@@ -41,3 +41,4 @@ export const HistoryIcon = RiHistoryFill;
 export const AsteriskIcon = RiAsterisk;
 export const WarningIcon = MdWarning;
 export const SpinnerIcon = FaSpinner;
+export const FolderIcon = RiFolderOpenFill;

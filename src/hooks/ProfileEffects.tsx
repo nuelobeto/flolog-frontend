@@ -3,7 +3,7 @@ import useAuth from "../store/useAuth";
 import useProfile from "../store/useProfile";
 
 const useProfileEffects = () => {
-  const { token } = useAuth((state) => state);
+  const { token, is_pharmacist } = useAuth((state) => state);
   const {
     getProfile,
     getUserActivity,
@@ -11,18 +11,24 @@ const useProfileEffects = () => {
     getMedicalHistory,
     getRiskFactors,
     getAllergies,
+    getConsultantProfile,
   } = useProfile((state) => state);
 
   useEffect(() => {
     if (!token) {
       return;
     }
-    getProfile(token);
-    getUserActivity(token);
-    getBioData(token);
-    getMedicalHistory(token);
-    getRiskFactors(token);
-    getAllergies(token);
+    if (is_pharmacist) {
+      getConsultantProfile(token);
+      getUserActivity(token);
+    } else {
+      getProfile(token);
+      getUserActivity(token);
+      getBioData(token);
+      getMedicalHistory(token);
+      getRiskFactors(token);
+      getAllergies(token);
+    }
   }, [token]);
 };
 

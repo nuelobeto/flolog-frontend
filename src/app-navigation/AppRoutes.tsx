@@ -16,6 +16,11 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import useAuth from "../store/useAuth";
 import useAuthEffects from "./../hooks/AuthEffects";
 import useProfileEffects from "../hooks/ProfileEffects";
+import ConsultantDashboard from "../pages/consultant-dashboard/ConsultantDashboard";
+import ConsultantHome from "../pages/consultant-home/ConsultantHome";
+import ConsultantActivies from "../pages/consultant-activities/ConsultantActivities";
+import ConsultantChat from "./../pages/chat/ConsultantChat";
+import { useState } from "react";
 
 const AppRoutes = () => {
   const { user } = useAuth((state) => state);
@@ -32,9 +37,19 @@ const AppRoutes = () => {
         <Route path={ROUTES.verification} element={<Verification />} />
 
         <Route element={<ProtectedRoutes isAllowed={user} />}>
-          <Route path={ROUTES.user_dashboard} element={<UserDashboard />} />
-          <Route path={ROUTES.home} element={<Home />} />
+          <Route path={ROUTES.client_dashboard} element={<UserDashboard />} />
+          <Route
+            path={ROUTES.consultant_dashboard}
+            element={<ConsultantDashboard />}
+          />
+          <Route path={ROUTES.client_home} element={<Home />} />
+          <Route path={ROUTES.consultant_home} element={<ConsultantHome />} />
+          <Route
+            path={ROUTES.consultant_activities}
+            element={<ConsultantActivies />}
+          />
           <Route path={ROUTES.chat} element={<Chat />} />
+          <Route path={ROUTES.consultant_chat} element={<ConsultantChat />} />
           <Route
             path={ROUTES.request_medication}
             element={<RequestMedication />}

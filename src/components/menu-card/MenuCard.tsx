@@ -11,7 +11,19 @@ type MenuProps = {
 
 const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
   const { pathname } = useLocation();
-  const { user, logout } = useAuth((state) => state);
+  const { user, logout, is_pharmacist } = useAuth((state) => state);
+  const links = [
+    {
+      name: is_pharmacist ? "Go Live" : "Home",
+      url: is_pharmacist ? ROUTES.chat : ROUTES.client_home,
+    },
+    {
+      name: "Dashboard",
+      url: is_pharmacist
+        ? ROUTES.consultant_dashboard
+        : ROUTES.client_dashboard,
+    },
+  ];
 
   const handleLogout = () => {
     logout();
@@ -39,13 +51,5 @@ const MenuCard = ({ showMenu, setShowMenu }: MenuProps) => {
     </div>
   );
 };
-
-const links = [
-  { name: "Home", url: ROUTES.home },
-  { name: "Dashboard", url: ROUTES.user_dashboard },
-  // { name: "Blog", url: ROUTES.blog },
-  // { name: "About Us", url: ROUTES.about_us },
-  // { name: "Log In", url: ROUTES.auth },
-];
 
 export default MenuCard;

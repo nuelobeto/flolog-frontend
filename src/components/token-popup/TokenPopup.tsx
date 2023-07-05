@@ -3,6 +3,9 @@ import { CloseIcon } from "../../assets/icons";
 import { ROUTES } from "../../config/routes";
 import { Button } from "../button/Button";
 import "./TokenPopup.scss";
+import useProfile from "./../../store/useProfile";
+import useAuth from "./../../store/useAuth";
+import chatServices from "../../services/chatServices";
 
 type TokenPopupProps = {
   openTokenPopup: boolean;
@@ -29,6 +32,21 @@ const packages = [
 
 const TokenPopup = ({ openTokenPopup, setOpenTokenPopup }: TokenPopupProps) => {
   const navigate = useNavigate();
+  const { profile } = useProfile((state) => state);
+  const { token } = useAuth((state) => state);
+
+  const requestChat = async () => {
+    if (token) {
+      try {
+        await chatServices.requestChat(token);
+        navigate(ROUTES.chat);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  console.log(profile);
 
   return (
     <div className="modal-wrapper token-popup">
@@ -54,7 +72,7 @@ const TokenPopup = ({ openTokenPopup, setOpenTokenPopup }: TokenPopupProps) => {
           variant={"filled"}
           rounded={"lg"}
           style={{ background: "#30B0FF", border: "1px solid #30B0FF" }}
-          onClick={() => navigate(ROUTES.chat)}
+          onClick={requestChat}
         >
           Confirm
         </Button>

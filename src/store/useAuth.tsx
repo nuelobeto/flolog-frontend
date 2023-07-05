@@ -8,6 +8,7 @@ type UserStateT = {
   error: any;
   success: boolean;
   token: null | string;
+  is_pharmacist: boolean;
   setUser: (user: null | any) => void;
   googleAuth: () => void;
   login: (payload: LoginT) => void;
@@ -35,6 +36,7 @@ const useAuth = create<UserStateT>((set) => ({
   error: "",
   success: false,
   token: accessToken ? accessToken : null,
+  is_pharmacist: parsedUser ? parsedUser.data.is_pharmacist : false,
 
   setUser: (user: null | any) => {
     set((state) => ({ user: (state.user = user) }));
@@ -54,6 +56,9 @@ const useAuth = create<UserStateT>((set) => ({
       set((state) => ({ success: (state.success = true) }));
       set((state) => ({ user: (state.user = user) }));
       set((state) => ({ token: (state.token = accessToken) }));
+      set((state) => ({
+        is_pharmacist: (state.is_pharmacist = user.is_pharmacist),
+      }));
     } catch (error: any) {
       set((state) => ({ loading: (state.loading = false) }));
       set((state) => ({ error: (state.error = error.response.data) }));

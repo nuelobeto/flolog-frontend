@@ -14,7 +14,9 @@ import useAuth from "../../store/useAuth";
 import { SpinnerIcon } from "../../assets/icons";
 
 const SignupForm = () => {
-  const { user, register, loading, error } = useAuth((state) => state);
+  const { user, register, loading, error, is_pharmacist } = useAuth(
+    (state) => state
+  );
   const [formData, setFormData] = useState({
     email: "",
     first_name: "",
@@ -50,9 +52,13 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (user) {
-      navigate(ROUTES.user_dashboard);
+      if (is_pharmacist) {
+        navigate(ROUTES.consultant_dashboard);
+      } else {
+        navigate(ROUTES.client_dashboard);
+      }
     }
-  }, [user]);
+  }, [user, is_pharmacist]);
 
   return (
     <>

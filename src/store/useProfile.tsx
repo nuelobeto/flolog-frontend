@@ -19,6 +19,9 @@ type ProfileStateT = {
   getRiskFactors: (token: string) => void;
   allergies: any | null;
   getAllergies: (token: string) => void;
+  consultantProfile: null | any;
+  getConsultantProfile: (token: string) => void;
+  loadingConsultantProfile: boolean;
 };
 
 const useProfile = create<ProfileStateT>((set) => ({
@@ -32,6 +35,8 @@ const useProfile = create<ProfileStateT>((set) => ({
   medicalHistory: null,
   riskFactors: null,
   allergies: null,
+  consultantProfile: null,
+  loadingConsultantProfile: false,
 
   getProfile: async (token: string) => {
     set((state) => ({ getProfileLoading: (state.getProfileLoading = true) }));
@@ -100,6 +105,28 @@ const useProfile = create<ProfileStateT>((set) => ({
         allergies: (state.allergies = allergies),
       }));
     } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getConsultantProfile: async (token: string) => {
+    set((state) => ({
+      loadingConsultantProfile: (state.loadingConsultantProfile = true),
+    }));
+    try {
+      const profile = await profileServices.getConsultantProfile(token);
+
+      set((state) => ({
+        loadingConsultantProfile: (state.loadingConsultantProfile = false),
+      }));
+      set((state) => ({
+        consultantProfile: (state.consultantProfile = profile),
+      }));
+      set((state) => ({ uuid: (state.uuid = profile.user) }));
+    } catch (error) {
+      set((state) => ({
+        loadingConsultantProfile: (state.loadingConsultantProfile = false),
+      }));
       console.log(error);
     }
   },

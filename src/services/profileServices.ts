@@ -106,6 +106,25 @@ const updateAllergies = async (token: string, payload: any) => {
   return response.data;
 };
 
+const getConsultantProfile = async (token: string) => {
+  const response = await axios.get(
+    `${BASE_URL}/accounts/update_pharma_profile/`,
+    config(token)
+  );
+
+  return response.data;
+};
+
+const updateConsultantProfile = async (token: string, payload: any) => {
+  const response = await axios.put(
+    `${BASE_URL}/accounts/update_pharma_profile/`,
+    payload,
+    config(token)
+  );
+
+  return response.data;
+};
+
 const profileServices = {
   getProfile,
   updateProfile,
@@ -118,6 +137,8 @@ const profileServices = {
   updateRiskFactors,
   getAllergies,
   updateAllergies,
+  getConsultantProfile,
+  updateConsultantProfile,
 };
 
 export default profileServices;
