@@ -6,6 +6,7 @@ import "./TokenPopup.scss";
 import useProfile from "./../../store/useProfile";
 import useAuth from "./../../store/useAuth";
 import chatServices from "../../services/chatServices";
+import { toast } from "react-toastify";
 
 type TokenPopupProps = {
   openTokenPopup: boolean;
@@ -38,10 +39,12 @@ const TokenPopup = ({ openTokenPopup, setOpenTokenPopup }: TokenPopupProps) => {
   const requestChat = async () => {
     if (token) {
       try {
-        await chatServices.requestChat(token);
+        const chatroom = await chatServices.requestChat(token);
+        localStorage.setItem("chatroomId", JSON.stringify(chatroom));
         navigate(ROUTES.chat);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        const errorMessage = error.response.data.error;
+        toast.error(errorMessage);
       }
     }
   };
@@ -56,31 +59,34 @@ const TokenPopup = ({ openTokenPopup, setOpenTokenPopup }: TokenPopupProps) => {
           onClick={() => setOpenTokenPopup(false)}
         />
 
-        <div className="token-image">
+        {/* <div className="token-image">
           <img src="/images/token-image.webp" alt="" />
         </div>
 
-        <h2>Congratulations!!</h2>
-
-        <p className="title">
-          You have a free token, click continue to access live chat immediately.
-        </p>
-
-        <Button
-          size={"sm"}
-          color={"primary"}
-          variant={"filled"}
-          rounded={"lg"}
-          style={{ background: "#30B0FF", border: "1px solid #30B0FF" }}
-          onClick={requestChat}
-        >
-          Confirm
-        </Button>
+        <h2>Congratulations!!</h2> */}
 
         <p className="subtitle">
-          <span>Don’t have a token?</span> Get any of these token packages below
-          in one click!
+          You have <span>{profile?.coin}</span> token
+          {profile?.coin === 1 ? "" : "s"},{" "}
+          {profile?.coin === 0
+            ? "Get any of the token packages below."
+            : "click continue to access live chat immediately."}
         </p>
+
+        {profile?.coin > 0 && (
+          <Button
+            size={"sm"}
+            color={"primary"}
+            variant={"filled"}
+            rounded={"lg"}
+            style={{ background: "#30B0FF", border: "1px solid #30B0FF" }}
+            onClick={requestChat}
+          >
+            Confirm
+          </Button>
+        )}
+
+        <h3 style={{ marginBottom: "1rem" }}>Token Packages</h3>
 
         <div className="token-packages">
           {packages.map((item, index) => (

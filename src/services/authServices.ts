@@ -21,6 +21,10 @@ const login = async (payload: LoginT) => {
 
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("pharm-joined");
+  localStorage.removeItem("chatroomId");
+  localStorage.removeItem("chat");
+  localStorage.removeItem("messages");
 };
 
 const authServices = {

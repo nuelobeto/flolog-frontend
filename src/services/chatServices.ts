@@ -31,10 +31,21 @@ const acceptChatRequests = async (token: string, payload: any) => {
   return response.data;
 };
 
+const sendMessage = async (token: string, payload: any) => {
+  const response = await axios.post(
+    `${BASE_URL}/chat/messages/`,
+    payload,
+    config(token)
+  );
+
+  return response.data;
+};
+
 const chatServices = {
   requestChat,
   getChatRequests,
   acceptChatRequests,
+  sendMessage,
 };
 
 export default chatServices;

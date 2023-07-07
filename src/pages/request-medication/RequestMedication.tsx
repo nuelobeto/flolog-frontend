@@ -207,6 +207,7 @@ const AddAddress = ({
   const { uuid } = useProfile((state) => state);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [loadingRequest, setLoadingRequest] = useState(false);
+  const [showWhatsappLink, setShowWhatsappLink] = useState(false);
 
   const handleRequestMedication = async () => {
     const payload = {
@@ -226,6 +227,8 @@ const AddAddress = ({
         await medicationServices.requestMedication(token, payload);
         console.log("request sent");
         setLoadingRequest(false);
+        setOpenConfirmation(false);
+        setShowWhatsappLink(true);
       } catch (error) {
         setLoadingRequest(false);
         console.log(error);
@@ -351,6 +354,18 @@ const AddAddress = ({
                 {!loadingRequest ? "Yes" : <SpinnerIcon className="spinner" />}
               </Button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showWhatsappLink && (
+        <div className="modal-wrapper confirm-request">
+          <div className="modal confirm-request-modal">
+            <CloseIcon
+              className="close-modal"
+              onClick={() => setShowWhatsappLink(false)}
+            />
+            <p>WhatsApp Link</p>
           </div>
         </div>
       )}

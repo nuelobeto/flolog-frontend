@@ -111,19 +111,10 @@
     gap: 0.5rem;
     overflow-y: auto;
     position: relative;
+    padding-top: 1rem;
 
     & > .init-message {
       padding: 0.5rem 0;
-      font-size: 14px;
-    }
-
-    .message {
-      border-radius: 12px;
-      max-width: 80%;
-      width: fit-content;
-      padding: 5px 10px;
-      background-color: #30b0ff;
-      color: #fff;
       font-size: 14px;
     }
   }
@@ -137,15 +128,24 @@
     overflow-y: auto;
     position: relative;
     padding-top: 55px;
+  }
 
-    .message {
-      border-radius: 12px;
-      max-width: 80%;
-      width: fit-content;
-      padding: 5px 10px;
+  .message {
+    border-radius: 12px;
+    max-width: 80%;
+    width: fit-content;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 14px;
+
+    &.sender {
       background-color: #30b0ff;
-      color: #fff;
-      font-size: 14px;
+      align-self: flex-end;
+    }
+
+    &.receiver {
+      background-color: #999999;
+      align-self: flex-start;
     }
   }
 

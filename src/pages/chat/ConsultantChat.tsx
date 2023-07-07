@@ -6,12 +6,14 @@ import { Button } from "../../components/button/Button";
 import { ROUTES } from "../../config/routes";
 import chatServices from "../../services/chatServices";
 import useAuth from "../../store/useAuth";
+import useProfile from "../../store/useProfile";
 import "./Chat.scss";
 
 const ConsultantChat = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const navigate = useNavigate();
   const { is_pharmacist, token } = useAuth((state) => state);
+  const { consultantProfile } = useProfile((state) => state);
   const [requests, setRequests] = useState<any[]>([]);
   const [loadingRequests, setLoadingRequests] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -22,6 +24,12 @@ const ConsultantChat = () => {
     ? JSON.parse(savedChat)
     : undefined;
   const [message, setMessage] = useState("");
+  const [content, setContent] = useState("");
+  const [sender, setSender] = useState("");
+
+  const pusher = new Pusher("0555a00d1095bd0a49f2", {
+    cluster: "mt1",
+  });
 
   const getChatRequests = async () => {
     if (token) {
@@ -49,6 +57,7 @@ const ConsultantChat = () => {
       try {
         await chatServices.acceptChatRequests(token, payload);
         localStorage.setItem("chat", JSON.stringify(chat));
+
         setChat(chat);
         setOpenSidebar(false);
       } catch (error) {
@@ -67,28 +76,85 @@ const ConsultantChat = () => {
       return;
     } else {
       localStorage.removeItem("chat");
+      localStorage.removeItem("messages");
       setChat(null);
     }
   };
 
-  console.log(chat);
+  const sendMessage = async () => {
+    if (message === "") {
+      return;
+    }
+
+    const payload = {
+      room: chat?.id,
+      sender: consultantProfile?.email,
+      content: message,
+    };
+
+    if (token) {
+      try {
+        await chatServices.sendMessage(token, payload);
+        setMessage("");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const showRequests = () => {
+    getChatRequests();
+    setOpenSidebar(true);
+  };
 
   useEffect(() => {
+    const savedMessages: string | null = localStorage.getItem("messages");
+    const parsedMessages: any[] | undefined = savedMessages
+      ? JSON.parse(savedMessages)
+      : undefined;
+
     getChatRequests();
     getChat();
+    setMessages(parsedMessages ? parsedMessages : []);
   }, []);
 
-  //   useEffect(() => {
-  //     const pusher = new Pusher("APP_KEY", {
-  //       cluster: "APP_CLUSTER",
-  //     });
+  useEffect(() => {
+    const chatroomChannel = pusher.subscribe("chatroom-channel");
+    chatroomChannel.bind("pharmacist-joined", (data: any) => {
+      console.log("pharmacist-joined");
+    });
+    chatroomChannel.bind("chatroom-closed", (data: any) => {
+      console.log("chatroom-closed");
+    });
+  });
 
-  //     const channel = pusher.subscribe("my-channel");
+  useEffect(() => {
+    if (chat) {
+      const chatChannel = pusher.subscribe(chat.channel_name);
+      chatChannel.bind("new-message", (data: any) => {
+        setContent(data.content);
+        setSender(data.sender);
+      });
+    }
+  });
 
-  //     channel.bind("my-event", (data: any) => {
-  //       setMessages([...messages, data]);
-  //     });
-  //   }, []);
+  useEffect(() => {
+    if (content) {
+      const newMessage = {
+        content,
+        sender,
+      };
+
+      setMessages([...messages, newMessage]);
+    }
+  }, [content]);
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      return;
+    }
+    localStorage.setItem("messages", JSON.stringify(messages));
+  }, [messages]);
 
   return (
     <main className="chat main">
@@ -145,7 +211,7 @@ const ConsultantChat = () => {
               color={"primary"}
               variant={"filled"}
               rounded={"md"}
-              onClick={() => setOpenSidebar(true)}
+              onClick={showRequests}
             >
               Show Requests
             </Button>
@@ -224,9 +290,15 @@ const ConsultantChat = () => {
           />
         </div>
         {messages.map((message, index) => (
-          <div className="message">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum,
-            iure.
+          <div
+            className={`message ${
+              message.sender === consultantProfile?.email
+                ? "sender"
+                : "receiver"
+            }`}
+            key={index}
+          >
+            {message.content}
           </div>
         ))}
       </div>
@@ -244,6 +316,7 @@ const ConsultantChat = () => {
           variant={"filled"}
           rounded={"md"}
           style={{ background: "#2e83b5", border: "1px solid #2e83b5" }}
+          onClick={sendMessage}
         >
           Send
         </Button>
