@@ -368,8 +368,7 @@ const UserDashboard = () => {
         </div>
 
         <div className="premium">
-          <span>Premium </span>
-          <span>25/30</span>
+          <span>Tokens:</span> <span>{profile?.coin}</span>
         </div>
 
         <div className="info">

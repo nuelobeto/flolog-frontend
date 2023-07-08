@@ -14,7 +14,7 @@ const Home = () => {
   const [openTokenPopup, setOpenTokenPopup] = useState(false);
   const navigate = useNavigate();
   const [packages, setPackages] = useState<any[]>([]);
-  const { getProfile } = useProfile((state) => state);
+  const { profile, getProfile } = useProfile((state) => state);
 
   const getPackages = async () => {
     if (token) {
@@ -37,7 +37,9 @@ const Home = () => {
   return (
     <>
       <main className="main home">
-        <h1>Good Morning John, Welcome to your Flolog EMS portal</h1>
+        <h1>
+          Good Morning {profile?.first_name}, Welcome to your Flolog EMS portal
+        </h1>
 
         <div
           className="request-service"

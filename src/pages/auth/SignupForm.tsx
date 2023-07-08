@@ -12,6 +12,7 @@ import "./Auth.scss";
 import { RegisterT } from "../../types/type";
 import useAuth from "../../store/useAuth";
 import { SpinnerIcon } from "../../assets/icons";
+import { toast } from "react-toastify";
 
 const SignupForm = () => {
   const { user, register, loading, error, is_pharmacist } = useAuth(
@@ -35,6 +36,11 @@ const SignupForm = () => {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+
+    if (formData.password !== formData.confirm_password) {
+      toast.error("Passwords mismatch!");
+      return;
+    }
 
     const payload: RegisterT = {
       email: formData.email,
