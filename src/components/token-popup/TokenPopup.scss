@@ -1,7 +1,6 @@
 .token-popup {
   .token-modal {
     height: fit-content;
-    padding-top: 0;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -12,7 +11,7 @@
       rgb(9, 161, 255),
       rgb(4, 109, 174)
     );
-    padding-top: 2rem;
+    padding: 2rem;
 
     .close-modal {
       color: #fff;
@@ -57,27 +56,31 @@
 
     .token-packages {
       width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
 
       .package {
+        width: 30%;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 0 10px 10px;
-        border-right: 1px solid #fff;
-        &:last-child {
-          border-right: none;
-        }
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: rgb(9, 161, 255);
+        border-radius: 12px;
+        padding: 10px 5px;
 
         .package-title {
           font-size: 14px;
           font-weight: 600;
           margin-bottom: 3px;
+          text-align: center;
         }
 
         .package-feature {
-          font-size: 11px;
+          font-size: 14px;
           text-align: center;
         }
 

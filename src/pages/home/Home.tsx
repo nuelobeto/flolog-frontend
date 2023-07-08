@@ -7,12 +7,14 @@ import useAuth from "../../store/useAuth";
 import "./Home.scss";
 import { toast } from "react-toastify";
 import paymentServices from "../../services/paymentServices";
+import useProfile from "./../../store/useProfile";
 
 const Home = () => {
   const { token } = useAuth((state) => state);
   const [openTokenPopup, setOpenTokenPopup] = useState(false);
   const navigate = useNavigate();
   const [packages, setPackages] = useState<any[]>([]);
+  const { getProfile } = useProfile((state) => state);
 
   const getPackages = async () => {
     if (token) {
@@ -27,6 +29,9 @@ const Home = () => {
 
   useEffect(() => {
     getPackages();
+    if (token) {
+      getProfile(token);
+    }
   }, []);
 
   return (
@@ -59,6 +64,7 @@ const Home = () => {
         <TokenPopup
           openTokenPopup={openTokenPopup}
           setOpenTokenPopup={setOpenTokenPopup}
+          packages={packages}
         />
       )}
 
