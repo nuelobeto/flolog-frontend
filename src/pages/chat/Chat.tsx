@@ -77,24 +77,25 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    const chatroomChannel = pusher.subscribe("chatroom-channel");
-    chatroomChannel.bind("pharmacist-joined", (data: any) => {
-      setPharmacistJoined(true);
-      localStorage.setItem("pharm-joined", JSON.stringify(true));
-    });
-    chatroomChannel.bind("chatroom-closed", (data: any) => {
-      setPharmacistJoined(false);
-      localStorage.removeItem("pharm-joined");
-    });
-  });
-
-  useEffect(() => {
     if (chatroom) {
+      const chatroomChannel = pusher.subscribe("chatroom-channel");
       const chatChannel = pusher.subscribe(chatroom.chatroom.channel_name);
-      chatChannel.bind("new-message", (data: any) => {
-        setContent(data.content);
-        setSender(data.sender);
-      });
+
+      if (chatChannel?.name === chatroom?.chatroom.channel_name) {
+        chatroomChannel.bind("pharmacist-joined", (data: any) => {
+          setPharmacistJoined(true);
+          localStorage.setItem("pharm-joined", JSON.stringify(true));
+        });
+        chatroomChannel.bind("chatroom-closed", (data: any) => {
+          setPharmacistJoined(false);
+          localStorage.removeItem("pharm-joined");
+        });
+
+        chatChannel.bind("new-message", (data: any) => {
+          setContent(data.content);
+          setSender(data.sender);
+        });
+      }
     }
   });
 

@@ -119,22 +119,23 @@ const ConsultantChat = () => {
   }, []);
 
   useEffect(() => {
-    const chatroomChannel = pusher.subscribe("chatroom-channel");
-    chatroomChannel.bind("pharmacist-joined", (data: any) => {
-      console.log("pharmacist-joined");
-    });
-    chatroomChannel.bind("chatroom-closed", (data: any) => {
-      console.log("chatroom-closed");
-    });
-  });
-
-  useEffect(() => {
     if (chat) {
-      const chatChannel = pusher.subscribe(chat.channel_name);
-      chatChannel.bind("new-message", (data: any) => {
-        setContent(data.content);
-        setSender(data.sender);
-      });
+      const chatroomChannel = pusher.subscribe("chatroom-channel");
+      const chatChannel = pusher.subscribe(chat?.channel_name);
+
+      if (chatChannel?.name === chat?.channel_name) {
+        chatroomChannel.bind("pharmacist-joined", (data: any) => {
+          console.log("pharmacist-joined");
+        });
+        chatroomChannel.bind("chatroom-closed", (data: any) => {
+          console.log("chatroom-closed");
+        });
+
+        chatChannel.bind("new-message", (data: any) => {
+          setContent(data.content);
+          setSender(data.sender);
+        });
+      }
     }
   });
 
